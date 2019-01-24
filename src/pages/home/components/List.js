@@ -12,7 +12,7 @@ class List extends PureComponent {
                 {
                     list.map((item, index) => {
                         return (
-                            <Link key={index} to='/detail'>
+                            <Link key={index} to={'/detail?id=' + item.get('id')}>
                                 <ListItem>
                                     <img className='pic' src={item.get('imgUrl')} alt=''/>
                                     <ListInfo>
@@ -24,7 +24,7 @@ class List extends PureComponent {
                         );
                     })
                 }
-                <LoadMore onClick={(page) => getMoreList(page)}>加载更多</LoadMore>
+                <LoadMore onClick={() => getMoreList(page)}>加载更多</LoadMore>
             </div>
         )
     }

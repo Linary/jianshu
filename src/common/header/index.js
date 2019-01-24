@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {CSSTransition} from 'react-transition-group'
 import {actionCreators} from './store';
+import {actionCreators as loginActionCreators} from '../../pages/login/store';
 import {Link} from 'react-router-dom';
 import {
     Addition,
@@ -55,7 +56,7 @@ class Header extends Component {
     };
 
     render() {
-        const {focused, handleInputFocus, handleInputBlur, list} = this.props;
+        const {focused, handleInputFocus, handleInputBlur, list, login, logout} = this.props;
         return (
             // 一个带样式的div
             <HeaderWrapper>
@@ -65,7 +66,12 @@ class Header extends Component {
                 <Navi>
                     <NaviItem className='left active'>首页</NaviItem>
                     <NaviItem className='left'>下载App</NaviItem>
-                    <NaviItem className='right'>登陆</NaviItem>
+                    {
+                        login ? <NaviItem onClick={logout} className='right'>退出</NaviItem> :
+                                <Link to='/login'>
+                                    <NaviItem className='right'>登陆</NaviItem>
+                                </Link>
+                    }
                     <NaviItem className='right'>
                         <i className="iconfont">&#xe636;</i>
                     </NaviItem>
@@ -87,10 +93,12 @@ class Header extends Component {
                     </SearchWrapper>
                 </Navi>
                 <Addition>
-                    <Button className='write'>
-                        <i className="iconfont">&#xe601;</i>
-                        写文章
-                    </Button>
+                    <Link to='/write'>
+                        <Button className='write'>
+                            <i className="iconfont">&#xe601;</i>
+                            写文章
+                        </Button>
+                    </Link>
                     <Button className='reg'>注册</Button>
                 </Addition>
             </HeaderWrapper>
@@ -105,7 +113,8 @@ const mapStateToProps = (state) => {
         list: state.getIn(['header', 'list']),
         page: state.getIn(['header', 'page']),
         totalPage: state.getIn(['header', 'totalPage']),
-        mouseIn: state.getIn(['header', 'mouseIn'])
+        mouseIn: state.getIn(['header', 'mouseIn']),
+        login: state.getIn(['login', 'login'])
     }
 };
 
@@ -140,6 +149,9 @@ const mapDispathToProps = (dispatch) => {
             } else {
                 dispatch(actionCreators.changePage(1));
             }
+        },
+        logout() {
+            dispatch(loginActionCreators.logout());
         }
     }
 };
