@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {CSSTransition} from 'react-transition-group'
 import {actionCreators} from './store';
+import {Link} from 'react-router-dom';
 import {
     Addition,
     Button,
@@ -58,7 +59,9 @@ class Header extends Component {
         return (
             // 一个带样式的div
             <HeaderWrapper>
-                <Logo/>
+                <Link to='/'>
+                    <Logo/>
+                </Link>
                 <Navi>
                     <NaviItem className='left active'>首页</NaviItem>
                     <NaviItem className='left'>下载App</NaviItem>
